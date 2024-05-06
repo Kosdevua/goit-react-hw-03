@@ -1,0 +1,23 @@
+.contact_wrapper {
+  width: calc((100% - 72px) / 4);
+  padding: 20px;
+  font-size: 18px;
+  /* width: 360px; */
+  border: 1px solid #000;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.contact_data {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.contact_btn {
+  box-sizing: border-box;
+  border: 1px solid #000;
+  border-radius: 5px;
+  font-size: 18px;
+}
