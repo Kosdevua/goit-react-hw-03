@@ -6,3 +6,10 @@
   border-radius: 5px;
   padding: 5px 2px;
 }
+
+.search_wrapper {
+  width: 365px;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+}

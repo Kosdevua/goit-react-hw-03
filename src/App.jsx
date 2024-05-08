@@ -3,9 +3,12 @@ import SearchBox from "./components/SearchBox/SearchBox";
 import ContactList from "./components/ContactList/ContactList";
 import { useState } from "react";
 import data from "./data/contactData.json";
+import { nanoid } from "nanoid";
+import useLocalStorage from "./Hooks/useLocalStorage";
 
 function App() {
-  const [users, setUsers] = useState(data);
+  const [users, setUsers] = useLocalStorage("users", data);
+
   const [inputValue, setInputValue] = useState("");
 
   const getFilterData = () => {
@@ -15,19 +18,29 @@ function App() {
   };
   const filteredData = getFilterData();
 
-  // added cards
-  // const onSubmit = ({ text }) => {
-  //   const toDo = { text, id: nanoid() };
-  //   setTodos([...todos, toDo]);
-  // };
+  const handleAddContact = (newContactData) => {
+    const newContact = {
+      id: nanoid(),
+      name: newContactData.name,
+      number: newContactData.number,
+    };
+    setUsers((prevUsers) => [newContact, ...prevUsers]);
+  };
+
+  const handleDeleteContact = (id) => {
+    setUsers((prev) => prev.filter((users) => users.id !== id));
+  };
 
   return (
     <>
       <div>
         <h1>Phonebook</h1>
-        <ContactForm />
-        <SearchBox inputValue={inputValue} setInputValue={setInputValue} />
-        <ContactList users={filteredData} />
+        <ContactForm handleAddContact={handleAddContact} />
+        <SearchBox setInputValue={setInputValue} />
+        <ContactList
+          handleDeleteContact={handleDeleteContact}
+          users={filteredData}
+        />
       </div>
     </>
   );

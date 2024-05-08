@@ -1,18 +1,33 @@
 import s from "./Contact.module.css";
+import { BsFillTelephoneFill } from "react-icons/bs";
+import { FaUser } from "react-icons/fa";
 
-const Contact = ({ users }) => {
+const Contact = ({ contact, onDeleteContact }) => {
+  const { id, name, number } = contact;
+
+  const handleDeleteContact = () => {
+    onDeleteContact(id);
+  };
   return (
-    <>
-      {users.map((contact) => (
-        <li className={s.contact_wrapper} key={contact.id}>
-          <div className={s.contact_data}>
-            <p>{contact.name}</p>
-            <p>{contact.number}</p>
-          </div>
-          <button className={s.contact_btn}>Delete</button>
-        </li>
-      ))}
-    </>
+    <li className={s.contact_wrapper}>
+      <div className={s.contact_data}>
+        <p>
+          <span>
+            <FaUser />
+          </span>
+          {name}
+        </p>
+        <p>
+          <span>
+            <BsFillTelephoneFill />
+          </span>
+          {number}
+        </p>
+      </div>
+      <button onClick={handleDeleteContact} className={s.contact_btn}>
+        Delete
+      </button>
+    </li>
   );
 };
 

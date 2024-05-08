@@ -1,40 +1,51 @@
-// import * as Yup from "yup";
+import * as yup from "yup";
 import s from "./ContactForm.module.css";
-import { Field, Form, Formik } from "formik";
+import { Field, Form, Formik, ErrorMessage } from "formik";
 import { nanoid } from "nanoid";
 
-// const validationSchema = Yup.object().shape({
-//   text: Yup.string()
-//     .min(2, "Too Short!")
-//     .max(50, "Too Long!")
-//     .required("Required"),
-// });
-const id = nanoid();
-
-const ContactForm = () => {
-  const initialValues = {
-    name: "",
-    number: "",
-    id,
+const ContactForm = ({ handleAddContact }) => {
+  const handleSubmit = (values, options) => {
+    handleAddContact(values);
+    // console.log(values);
+    options.resetForm();
   };
-
-  const handleSubmit = (values, actions) => {
-    console.log(values);
-    console.log(actions);
-    actions.resetForm();
-  };
+  const initialValues = { name: "", number: "", id: nanoid() };
+  const FeedbackSchema = yup.object().shape({
+    name: yup
+      .string()
+      .required("Required")
+      .min(3, "Too short")
+      .max(50, "Too max")
+      .trim(),
+    number: yup
+      .string()
+      .required("Fields must be required")
+      .min(3, "Minimum number of characters - 3")
+      .max(50, "Maximum number of characters - 50")
+      .trim(),
+  });
 
   return (
     <Formik
-      // validationSchema={validationSchema}
       initialValues={initialValues}
       onSubmit={handleSubmit}
+      validationSchema={FeedbackSchema}
     >
       <Form className={s.form_wrapper}>
         <label htmlFor="name">Name</label>
         <Field type="text" name="name" />
+        <ErrorMessage
+          className={s.error_message}
+          name="name"
+          component="span"
+        />
         <label htmlFor="number">Number</label>
         <Field type="text" name="number" />
+        <ErrorMessage
+          className={s.error_message}
+          name="number"
+          component="span"
+        />
         <button>Add contact</button>{" "}
       </Form>
     </Formik>
