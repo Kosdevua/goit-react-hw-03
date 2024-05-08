@@ -15,13 +15,13 @@ const ContactForm = ({ handleAddContact }) => {
       .string()
       .required("Required")
       .min(3, "Too short")
-      .max(50, "Too max")
+      .max(50, "Too long")
       .trim(),
     number: yup
       .string()
-      .required("Fields must be required")
-      .min(3, "Minimum number of characters - 3")
-      .max(50, "Maximum number of characters - 50")
+      .required("Required")
+      .min(3, "Too short")
+      .max(50, "Too long")
       .trim(),
   });
 
